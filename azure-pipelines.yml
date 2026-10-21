@@ -5,15 +5,47 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: Validate
-  displayName: 'Terraform Format & Validate'
+- stage: BuildAndValidate
+  displayName: 'Terraform Validate & Plan'
   jobs:
-  - job: TerraformValidate
-    displayName: 'Validate Terraform Code'
+  - job: TerraformJob
+    displayName: 'Terraform Init & Plan'
     steps:
-    - script: |
-        cd configs/terraform
-        terraform init -backend=false
-        terraform fmt -check
-        terraform validate
-      displayName: 'Run Terraform Init (local) & Validate'
+    - task: TerraformCLI@0
+      displayName: 'Terraform Init'
+      inputs:
+        command: 'init'
+        workingDirectory: 'configs/terraform'
+        backendType: 'azurerm'
+        backendServiceArm: 'github-sc-owncloud'
+        ensureBackend: true
+
+    - task: TerraformCLI@0
+      displayName: 'Terraform Plan'
+      inputs:
+        command: 'plan'
+        workingDirectory: 'configs/terraform'
+        environmentServiceName: 'github-sc-owncloud'
+
+- stage: Deploy
+  displayName: 'Deploy Infrastructure'
+  dependsOn: BuildAndValidate
+  condition: succeeded()
+  jobs:
+  - job: ApplyJob
+    displayName: 'Terraform Apply'
+    steps:
+    - task: TerraformCLI@0
+      displayName: 'Terraform Init'
+      inputs:
+        command: 'init'
+        workingDirectory: 'configs/terraform'
+        backendType: 'azurerm'
+        backendServiceArm: 'github-sc-owncloud'
+
+    - task: TerraformCLI@0
+      displayName: 'Terraform Apply'
+      inputs:
+        command: 'apply'
+        workingDirectory: 'configs/terraform'
+        environmentServiceName: 'github-sc-owncloud'

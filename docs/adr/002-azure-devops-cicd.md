@@ -4,16 +4,9 @@
 Elfogadva
 
 ## Context
-Az ownCloud infrastruktúra (DaC) életciklus-kezeléséhez távoli Terraform állapotfájl-tárolóra (Azure Blob Storage) és automatizált CI/CD pipeline-ra (Azure DevOps + GitHub integráció) van szükség, amelyet teljes egészében kódból (CLI scripttel) hozunk létre.
+Az ownCloud infrastruktúra (DaC) életciklus-kezeléséhez távoli Terraform állapotfájl-tárolóra (Azure Blob Storage) és automatizált CI/CD pipeline-ra (Azure DevOps + GitHub integráció) van szükség.
 
 ## Decision
-- **Terraform Backend:** Az `austriaeast` régióban a `rg-terraform-state` erőforráscsoportban véletlenszerű nevű (`sttfstate...`) Storage Account és `tfstate` konténer jön létre, amelyhez a `configs/terraform/backend.tf` automatikusan generálódik (`dev.terraform.tfstate`).
-- **Verziókezelés:** GitHub (`itsysbbdev/owncloud-azure-dac`).
-- **CI/CD Orchestration:** Azure DevOps (`ownCloud-DaC-Project` projekt, `owncloud-dac-pipeline` pipeline).
-- **Bootstrapping:** A `scripts/azure-init.sh` script idempotens módon felépíti a backendet, a DevOps projektet, a GitHub Service Connectiont és a pipeline-t.
-
-## Használat
-1. Azure CLI bejelentkezés a DevContainerben: `az login --use-device-code`
-2. Azure DevOps szervezet URL megadása: `export AZURE_DEVOPS_EXT_ORG_URL="https://dev.azure.com/<szervezet>"`
-3. Inicializálás futtatása: `./scripts/azure-init.sh`
-4. Pipeline futtatása parancssorból: `az pipelines run --name "owncloud-dac-pipeline" --project "ownCloud-DaC-Project"`
+- **Terraform Backend:** Az `austriaeast` régióban a `rg-terraform-state` erőforráscsoportban Storage Account (`sttfstate...`) és `tfstate` konténer tárolja a `dev.terraform.tfstate` fájlt.
+- **Infrastruktúra (IaC):** Azure Container Apps (ACA), PostgreSQL Flexible Server (`B_Standard_B1ms`) és Azure Files.
+- **CI/CD Automatizálás:** A `main` ágra történő push után a pipeline automatikusan futtatja a `terraform plan`-t és a `terraform apply`-t.
