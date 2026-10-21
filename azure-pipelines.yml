@@ -4,11 +4,12 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+# Forced update to ensure Azure DevOps picks up the correct azure-rm-sc service connection
 steps:
 - task: AzureCLI@2
   displayName: 'Terraform Init, Plan & Apply'
   inputs:
-    azureSubscription: 'github-sc-owncloud'
+    azureSubscription: 'azure-rm-sc'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
