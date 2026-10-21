@@ -29,3 +29,7 @@ docker rm -f devcontainer-owncloud-dac 2>/dev/null || true
 
 ## 4. Következő Lépés: Azure Backend és DevOps CI/CD
 - A `scripts/azure-init.sh` felelős a Terraform state backend (Azure Storage) és az Azure DevOps pipeline kódból történő létrehozásáért.
+
+## 5. Konténer Belső CLI Eszközök és Hitelesítés (Troubleshooting)
+- **Docker CLI és Socket:** A DooD (Docker-outside-of-Docker) működéshez a `docker.io` csomag és a `sudo chmod 666 /var/run/docker.sock` jogosultság beépítésre került a base image-be.
+- **GitHub Token (Keyring):** A host OS keyring helyett a konténerben a `gh auth login` és `gh auth setup-git` biztosítja a megosztott `~/.config/gh` hitelesítést.
