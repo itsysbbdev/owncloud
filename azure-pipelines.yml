@@ -4,48 +4,15 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-stages:
-- stage: BuildAndValidate
-  displayName: 'Terraform Validate & Plan'
-  jobs:
-  - job: TerraformJob
-    displayName: 'Terraform Init & Plan'
-    steps:
-    - task: TerraformCLI@0
-      displayName: 'Terraform Init'
-      inputs:
-        command: 'init'
-        workingDirectory: 'configs/terraform'
-        backendType: 'azurerm'
-        backendServiceArm: 'github-sc-owncloud'
-        ensureBackend: true
-
-    - task: TerraformCLI@0
-      displayName: 'Terraform Plan'
-      inputs:
-        command: 'plan'
-        workingDirectory: 'configs/terraform'
-        environmentServiceName: 'github-sc-owncloud'
-
-- stage: Deploy
-  displayName: 'Deploy Infrastructure'
-  dependsOn: BuildAndValidate
-  condition: succeeded()
-  jobs:
-  - job: ApplyJob
-    displayName: 'Terraform Apply'
-    steps:
-    - task: TerraformCLI@0
-      displayName: 'Terraform Init'
-      inputs:
-        command: 'init'
-        workingDirectory: 'configs/terraform'
-        backendType: 'azurerm'
-        backendServiceArm: 'github-sc-owncloud'
-
-    - task: TerraformCLI@0
-      displayName: 'Terraform Apply'
-      inputs:
-        command: 'apply'
-        workingDirectory: 'configs/terraform'
-        environmentServiceName: 'github-sc-owncloud'
+steps:
+- task: AzureCLI@2
+  displayName: 'Terraform Init, Plan & Apply'
+  inputs:
+    azureSubscription: 'github-sc-owncloud'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      cd configs/terraform
+      terraform init
+      terraform plan -out=tfplan
+      terraform apply -input=false tfplan
