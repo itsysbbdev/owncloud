@@ -9,7 +9,7 @@ CONTAINER_NAME="tfstate"
 
 # --- 2. Azure DevOps és GitHub Változók ---
 GITHUB_OWNER="itsysbbdev"
-REPO_NAME="owncloud-azure-dac"
+REPO_NAME="owncloud"
 PROJECT_NAME="ownCloud-DaC-Project"
 GH_SC_NAME="github-sc-owncloud"
 PIPELINE_NAME="owncloud-dac-pipeline"

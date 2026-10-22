@@ -1,10 +1,10 @@
 # Runbook: DaC Munkakörnyezet, GHCR Base Image és GitHub Bootstrap
 
-Ez a dokumentum rögzíti az `owncloud-azure-dac` projekt inicializálásának pontos lépéseit és a reproduválható parancsokat.
+Ez a dokumentum rögzíti az `owncloud` projekt inicializálásának pontos lépéseit és a reproduválható parancsokat.
 
 ## 1. Host Mappastruktúra és GitHub Repo Inicializálás
 - A projekt a host gépen a `~/projects/owncloud` könyvtárban helyezkedik el (Single Source of Truth).
-- Távoli repository: `owncloud-azure-dac` (GitHub).
+- Távoli repository: `owncloud` (GitHub).
 - Alap DaC struktúra: `docs/c4-model`, `docs/adr`, `configs/terraform`, `configs/ansible`, `configs/docker`, `scripts`.
 
 ## 2. Pre-built DevContainer Base Image (GHCR)
