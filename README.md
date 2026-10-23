@@ -6,5 +6,5 @@ Ez a repository egy teljes körűen automatizált, Infrastructure as Code (IaC) 
 
 1. Klónozd a repository-t:
    ```bash
-   git clone [https://github.com/saját-felhasználó/owncloud-azure-containerapps.git](https://github.com/saját-felhasználó/owncloud-azure-containerapps.git)
-   cd owncloud-azure-containerapps
+   git clone https://github.com/itsysbbdev/owncloud
+   cd owncloud
