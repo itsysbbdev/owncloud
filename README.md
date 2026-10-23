@@ -1,21 +1,10 @@
-# ownCloud on Azure - DaC Workspace
+# OwnCloud on Azure Container Apps (Zero-Touch IaC)
 
-Ez a repository az **ownCloud** Azure Container Apps alapú infrastruktúráját és DaC (Documentation-as-Code / C4 / ADR) dokumentációját tartalmazza.
+Ez a repository egy teljes körűen automatizált, Infrastructure as Code (IaC) alapú ownCloud deployment megoldást biztosít Microsoft Azure Container Apps környezetben, PostgreSQL adatbázis háttérrel és automatikus CNAME-alapú SSL (Managed Certificate) tanúsítványkezeléssel.
 
-## DevContainer (DiD) Környezet
-- **Base Image:** `ghcr.io//dac-architect-base:latest`
-- **Container Name:** `devcontainer-owncloud-dac`
-- **Workspace Path:** `/workspaces/owncloud`
+## Gyorsindítás (Zero-Touch Deployment)
 
-## Dokumentáció (DaC)
-### Runbooks (Műveleti Útmutatók)
-- [Környezet Felépítési és Bootstrap Runbook](docs/runbook-environment-setup.md)
-
-### C4 Architekturális Modell
-- [C4 Level 1: System Context](docs/c4-model/c4-context.md)
-- [C4 Level 2: Container Architecture](docs/c4-model/c4-containers.md)
-
-### Architekturális Döntések (ADR)
-- [ADR-001: Azure Container Apps és Managed PostgreSQL](docs/adr/001-azure-container-apps-architecture.md)
-- [ADR-002: Azure DevOps és GitHub Integrált CI/CD Pipeline](docs/adr/002-azure-devops-cicd.md)
-- [ADR-003: Projektszintű DevContainer Szeparáció és Pre-built Base Image](docs/adr/003-prebuilt-devcontainer-image.md)
+1. Klónozd a repository-t:
+   ```bash
+   git clone [https://github.com/saját-felhasználó/owncloud-azure-containerapps.git](https://github.com/saját-felhasználó/owncloud-azure-containerapps.git)
+   cd owncloud-azure-containerapps

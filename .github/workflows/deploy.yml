@@ -1,0 +1,23 @@
+name: Deploy OwnCloud IaC Zero-Touch
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Run Deployment Script
+        run: |
+          chmod +x ./scripts/deploy.sh
+          ./scripts/deploy.sh
